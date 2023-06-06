@@ -1,0 +1,70 @@
+Home -
+    - Get started - (button) // Redirect to My surveys page
+    - About information - (text section)
+
+My surveys -
+    - Create new (button) // Redirect to chose type
+    - List of surveys (list)
+
+Chose type -
+    - Options - (list: Title, Description, Button) // Buttons linked to Build
+
+Build page -
+    * initial state *
+        - Number of questions (Number input)
+
+    * after question number selection *
+    ** Question options component **
+        - Heading (h3) // eg Question 1 options
+        - Question type (dropdown)
+        - Number of options (Number input)
+    
+    * after question options *
+    ** Question creator component **
+        - Heading (h3) // eg Question 1 content
+        - Question content (text input)
+
+    * after question creator *
+        ** Question options component **
+            - Heading (h3) // eg Question 1 options
+            - Question type (dropdown)
+            - Number of options (Number input)
+
+    * Single or Single Multi *
+        - Question content (text input)
+        - Number of options - (number input)
+        - Answer content - (text inputs) // Number of options will determine how many inputs
+        - Preview (button) // Redirect to Preview
+
+Preview -
+    - Survey preview (form)
+    - Keep building (button) // Redirect to Build page
+    - Save (button) // Save survey and redirect to My surveys
+
+__ Data structure __
+
+Survey array
+    [
+        {
+            QuestionType: '',
+            QuestionContent: '',
+            Options: [
+                '',
+                '',
+                ''
+            ]
+        }
+    ]
+
+Results array
+    [
+        {
+            QuestionContent: '',
+            AnswerContent: [        
+                '',
+                '',
+                ''
+            ]
+        }
+    ]
+    ** AnswerContent length dependant on Question type **

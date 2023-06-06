@@ -1,0 +1,14 @@
+:root {
+    --accent-color: rgba(111, 111, 255, 0.5);
+    --mid-accent: rgb(20, 20, 200);
+    --light-text: rgba(0, 0, 0, 0.7);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#app {
+    font-family: Helvetica;
+}

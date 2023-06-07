@@ -16,25 +16,42 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        title: 'My survey | Home'
+      }
     },
     {
       path: '/my-surveys',
       name: 'my-surveys',
-      component: MySurveys
+      component: MySurveys,
+      meta: {
+        title: 'My survey | Surveys'
+      }
     },
     {
       path: '/build',
       name: 'build',
-      component: Build
+      component: Build,
+      meta: {
+        title: 'My survey | Build'
+      }
     },
     {
       path: '/preview',
       name: 'preview',
-      component: Preview
+      component: Preview,
+      meta: {
+        title: 'My survey | Preview'
+      }
     }
     
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = `${to.meta.title}`
+  next()
 })
 
 export default router

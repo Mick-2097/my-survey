@@ -37,6 +37,9 @@ h3 {
     cursor: default;
     margin-bottom: 1rem;
 }
+input[type=text] {
+    width: 100%;
+}
 img {
     cursor: pointer;
     scale: 50%;

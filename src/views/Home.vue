@@ -44,7 +44,7 @@ h3 {
 p {
     text-indent: 3ch;
     line-height: 1.5;
-    width: 35ch;
+    width: 40ch;
     max-width: 290px;
     color: var(--light-text);
     padding: 0 1em;

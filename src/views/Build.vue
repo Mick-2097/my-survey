@@ -78,4 +78,7 @@ select {
 span {
     color: rgb(225, 28, 28);
 }
+button {
+    width: 100%;
+}
 </style>

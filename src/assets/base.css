@@ -1,6 +1,7 @@
 :root {
     --accent-color: rgba(111, 111, 255, 0.5);
-    --mid-accent: rgb(20, 20, 200);
+    --light-accent: rgba(111, 111, 255, 0.2);
+    --mid-accent: rgb(19, 19, 138);
     --light-text: rgba(0, 0, 0, 0.7);
 }
 
@@ -10,5 +11,30 @@
     box-sizing: border-box;
 }
 #app {
-    font-family: Helvetica;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    width: 320px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--light-accent);
+    padding: 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+input {
+    height: fit-content;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
 }

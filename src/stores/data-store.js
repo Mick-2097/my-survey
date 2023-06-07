@@ -43,10 +43,11 @@ export const dataStore = defineStore('data-store', () => {
       surveyArray.value.push({
         QuestionType: questionType.value,
         QuestionContent: questionContent.value,
-        Options: answerContentArray
+        Options: [...answerContentArray]
       })
       resolve()
     })
+    console.log(surveyArray.value[0])
     const clearQuestion = () => {
       questionType.value = ''
       questionContent.value = ''
@@ -62,6 +63,5 @@ export const dataStore = defineStore('data-store', () => {
       clearQuestion()
     }
   }
-
   return { ButtonText, isSurveySet, surveyName, numberOfQuestions, surveyArray, questionType, questionContent, numberOfAnswers, setAnswersArray, answerContentArray, isQuestionSet, isSurveyValid, isQuestionValid, isSurveyComplete, setSurvey, setQuestion, saveQuestion }
 })

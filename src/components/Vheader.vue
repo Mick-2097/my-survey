@@ -5,13 +5,13 @@ const props = defineProps({
 </script>
 
 <template>
-    <section>
+    <header>
         <h2>{{ HeaderText }}</h2>
-    </section>
+    </header>
 </template>
 
 <style scoped>
-section {
+header {
     width: 100%;
     text-align: center;
     background: var(--accent-color);

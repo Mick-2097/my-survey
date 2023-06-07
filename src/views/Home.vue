@@ -39,11 +39,15 @@ a {
 h3 {
     text-decoration: underline;
     cursor: default;
+    font-size: 22px;
 }
 p {
     text-indent: 3ch;
     line-height: 1.5;
     width: 35ch;
+    max-width: 290px;
     color: var(--light-text);
+    padding: 0 1em;
+    font-size: 18px;
 }
 </style>

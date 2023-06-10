@@ -1,8 +1,8 @@
 :root {
     --accent-color: rgba(111, 111, 255, 0.5);
+    --mid-accent: rgb(30, 30, 148);
     --light-accent: rgba(111, 111, 255, 0.2);
-    --mid-accent: rgb(19, 19, 138);
-    --light-text: rgba(0, 0, 0, 0.7);
+    --light-text: rgba(0, 0, 0, 0.6);
 }
 
 * {
@@ -10,39 +10,103 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 #app {
     font-family: 'Quicksand', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    width: 100%;
+    max-width: 532px;
+}
+section {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 100px;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
 }
 
 .wrapper {
+    width: 100%;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
-label {
-    width: 320px;
+.buttons {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    background: var(--light-accent);
-    padding: 8px;
+    gap: 1rem;
+}
+label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    background: var(--accent-color);
+    padding: 1rem;
     border-radius: 6px;
     font-weight: 600;
     margin-bottom: 1rem;
 }
 
-input {
-    height: fit-content;
+input,
+select,
+option {
     border: none;
-    border-radius: 4px;
+    border-radius: 3px;
     text-align: center;
+    padding: .3rem;
+    font-size: 14px;
+    color: var(--light-text);
 }
 
 input[type=text] {
     text-align: left;
     padding-left: 1em;
+    width: 100%;
+}
+input[type=number] {
+    width: 200px;
+    align-self: center;
+}
+input[type=radio],
+input[type=checkbox] {
+    transform: scale(1.5);
+    align-self: flex-end;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 ::-webkit-scrollbar {
     display: none;
+}
+@media (min-width: 395px) {
+    .container {
+        padding-inline: 2rem;
+    }
+    .buttons {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
 }

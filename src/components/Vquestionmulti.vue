@@ -15,15 +15,14 @@ const store = dataStore()
         </label>
         <span v-if="!store.isQuestionValid"> Please fill in Question content</span>
         <Vbutton v-if="!store.isQuestionSet" @click="store.setQuestion" ButtonText="Next"/>
-        <div class="options">
-            <div v-if="store.isQuestionSet" v-for="index in store.setAnswersArray" :key="index">
-                <label title="An available answer">
-                    Option {{ index + 1 }}:
-                    <input type="text" v-model="store.answerContentArray[index]">
-                </label>
-            </div>
-            <Vbutton v-if="store.isQuestionSet" ButtonText="Next" @click="store.saveQuestion"/>
+        <div class="options" v-if="store.isQuestionSet" v-for="index in store.setAnswersArray" :key="index">
+            <label title="An available answer">
+                Option {{ index + 1 }}:
+                <input type="text" v-model="store.answerContentArray[index]">
+            </label>
         </div>
+        <span v-if="!store.isAnswerValid">Please complete all options</span>
+        <Vbutton v-if="store.isQuestionSet" ButtonText="Next" @click="store.saveQuestion"/>
     </div>
 </template>
 
@@ -36,6 +35,7 @@ span {
     margin-bottom: 1rem;
 }
 .options {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

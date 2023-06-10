@@ -1,8 +1,9 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 export const dataStore = defineStore('data-store', () => {
+  const router = useRouter()
   const ButtonText = ref('')
-
   const surveyArray = ref([])
   const isSurveySet = ref(false)
   const surveyName = ref('')
@@ -15,7 +16,10 @@ export const dataStore = defineStore('data-store', () => {
   const isQuestionSet = ref(false)
   const isSurveyValid = ref(true)
   const isQuestionValid = ref(true)
+  const isAnswerValid = ref(true)
   const isSurveyComplete = ref(false)
+  const isModalShown = ref(false)
+  const indexToEdit = ref (0)
 
   const setSurvey = () => {
     if (surveyName.value && numberOfQuestions.value) {
@@ -40,20 +44,27 @@ export const dataStore = defineStore('data-store', () => {
 
   const saveQuestion = async () => {
     await new Promise((resolve) => {
-      surveyArray.value.push({
-        QuestionType: questionType.value,
-        QuestionContent: questionContent.value,
-        Options: [...answerContentArray]
-      })
-      resolve()
+      if (questionType.value === 'Text response') {
+        numberOfAnswers.value = 0
+      }
+      if (numberOfAnswers.value !== answerContentArray.length) {
+        isAnswerValid.value = false
+      } else {
+        surveyArray.value.push({
+          QuestionType: questionType.value,
+          QuestionContent: questionContent.value,
+          Options: [...answerContentArray]
+        })
+        resolve()
+      }
     })
-    console.log(surveyArray.value[0])
     const clearQuestion = () => {
       questionType.value = ''
       questionContent.value = ''
       setAnswersArray.splice(0)
       answerContentArray.splice(0)
       isQuestionSet.value = false
+      numberOfAnswers.value = 2
     }
     if (surveyArray.value.length < numberOfQuestions.value) {
       clearQuestion()
@@ -63,5 +74,48 @@ export const dataStore = defineStore('data-store', () => {
       clearQuestion()
     }
   }
-  return { ButtonText, isSurveySet, surveyName, numberOfQuestions, surveyArray, questionType, questionContent, numberOfAnswers, setAnswersArray, answerContentArray, isQuestionSet, isSurveyValid, isQuestionValid, isSurveyComplete, setSurvey, setQuestion, saveQuestion }
+
+  const openEditor = (index) => {
+    indexToEdit.value = index
+    isModalShown.value = true
+  }
+  const deleteQuestion = (index) => {
+    surveyArray.value.splice(index, 1)
+    closeEditor()
+    if (!surveyArray.value.length) {
+      surveyName.value = ''
+      isSurveySet.value = false
+      isSurveyComplete.value = false
+      router.push('/build')
+    }
+  }
+  const closeEditor = () => {
+    isModalShown.value = false
+  }
+ 
+  return { 
+    ButtonText, 
+    isSurveySet, 
+    surveyName, 
+    numberOfQuestions, 
+    surveyArray, 
+    questionType, 
+    questionContent, 
+    numberOfAnswers, 
+    setAnswersArray, 
+    answerContentArray, 
+    isQuestionSet, 
+    isSurveyValid, 
+    isQuestionValid, 
+    isAnswerValid, 
+    isSurveyComplete, 
+    isModalShown,
+    indexToEdit,
+    setSurvey, 
+    setQuestion, 
+    saveQuestion,
+    openEditor,
+    deleteQuestion,
+    closeEditor
+  }
 })

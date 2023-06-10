@@ -5,7 +5,7 @@ import Vbutton from '../components/Vbutton.vue'
 </script>
 
 <template>
-    <section>
+    <section class="no-shadow">
         <RouterLink to="build">
             <Vbutton ButtonText="Get started"/>
         </RouterLink>
@@ -21,13 +21,8 @@ import Vbutton from '../components/Vbutton.vue'
 </template>
 
 <style scoped>
-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 100px;
-    gap: 2rem;
+.no-shadow {
+    box-shadow: none;
 }
 a {
     height: fit-content;
@@ -35,11 +30,13 @@ a {
     display: flex;
     justify-content: center;
     text-decoration: none;
+    margin-bottom: 2rem;
 }
 h3 {
     text-decoration: underline;
     cursor: default;
     font-size: 22px;
+    margin-bottom: 1rem;
 }
 p {
     text-indent: 3ch;

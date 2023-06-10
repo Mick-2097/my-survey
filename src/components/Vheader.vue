@@ -1,4 +1,5 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 const props = defineProps({
     HeaderText: String
 })
@@ -6,6 +7,7 @@ const props = defineProps({
 
 <template>
     <header>
+        <RouterLink class="home-button" to="home">Home</RouterLink>
         <h2>{{ HeaderText }}</h2>
     </header>
 </template>
@@ -14,10 +16,14 @@ const props = defineProps({
 header {
     width: 100%;
     text-align: center;
-    background: var(--accent-color);
+    background: var(--light-accent);
     padding: 0.5rem 1rem;
 }
 h2 {
     cursor: default;
+}
+.home-button {
+    float: left;
+    width: fit-content;
 }
 </style>

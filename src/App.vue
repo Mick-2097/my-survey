@@ -8,11 +8,16 @@ import Vheader from './components/Vheader.vue';
     <Vheader HeaderText="My survey"/>
   </header>
 
-  <RouterView />
+  <RouterView v-slot="{ Component }">
+    <transition name="fade" mode="out-in">
+      <component :is="Component"/>
+    </transition>
+  </RouterView>
 </template>
 
 <style scoped>
 header {
+  width: 100%;
   margin-bottom: 2rem;
 }
 </style>

@@ -1,16 +1,16 @@
 <script setup>
 const props = defineProps({
-    ButtonText: String
+    ButtonText: String,
+    Class: String
 })
 </script>
 
 <template>
-    <button type="button">{{ ButtonText }}</button>
+    <button type="button" :class="Class">{{ ButtonText }}</button>
 </template>
 
 <style scoped>
 button {
-    width: 80%;
     max-width: 300px;
     margin: 1em 0;
     padding: 0.3rem 1rem;
@@ -21,7 +21,7 @@ button {
     border: 2px solid var(--mid-accent);
     color: white;
     margin: 0;
-    transition: 0.3s;
+    transition: 0.5s;
 }
 button:hover,
 button:active {
@@ -30,5 +30,7 @@ button:active {
     border: 2px solid var(--mid-accent);
     cursor: pointer;
 }
+
+
 
 </style>

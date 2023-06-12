@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 export const dataStore = defineStore('data-store', () => {
   const router = useRouter()
-  const ButtonText = ref('')
+  const buttonText = ref('')
   const surveyArray = ref([])
   const isSurveySet = ref(false)
   const surveyName = ref('')
@@ -18,7 +18,8 @@ export const dataStore = defineStore('data-store', () => {
   const isQuestionValid = ref(true)
   const isAnswerValid = ref(true)
   const isSurveyComplete = ref(false)
-  const isModalShown = ref(false)
+  const isEditorShown = ref(false)
+  const isAddQuestion = ref(false)
   const indexToEdit = ref (0)
 
   const setSurvey = () => {
@@ -40,6 +41,17 @@ export const dataStore = defineStore('data-store', () => {
     } else {
       isQuestionValid.value = false
     }
+    if (questionType.value === 'Text response' && isQuestionSet.value) {
+      saveQuestion()
+    }
+  }
+  const clearQuestion = () => {
+    questionType.value = ''
+    questionContent.value = ''
+    setAnswersArray.splice(0)
+    answerContentArray.splice(0)
+    isQuestionSet.value = false
+    numberOfAnswers.value = 2
   }
 
   const saveQuestion = async () => {
@@ -56,16 +68,12 @@ export const dataStore = defineStore('data-store', () => {
           Options: [...answerContentArray]
         })
         resolve()
+        isAddQuestion.value = false
+        isQuestionValid.value = true
+        isAnswerValid.value = true
       }
     })
-    const clearQuestion = () => {
-      questionType.value = ''
-      questionContent.value = ''
-      setAnswersArray.splice(0)
-      answerContentArray.splice(0)
-      isQuestionSet.value = false
-      numberOfAnswers.value = 2
-    }
+
     if (surveyArray.value.length < numberOfQuestions.value) {
       clearQuestion()
     } 
@@ -76,8 +84,18 @@ export const dataStore = defineStore('data-store', () => {
   }
 
   const openEditor = (index) => {
-    indexToEdit.value = index
-    isModalShown.value = true
+      indexToEdit.value = index
+      isEditorShown.value = true
+  }
+  const closeEditor = () => {
+    isEditorShown.value = false
+  }
+  const openAddQuestion = (index) => {
+    clearQuestion()
+    isAddQuestion.value = true
+  }
+  const closeAddQuestion = () => {
+    isAddQuestion.value = false
   }
   const deleteQuestion = (index) => {
     surveyArray.value.splice(index, 1)
@@ -86,15 +104,13 @@ export const dataStore = defineStore('data-store', () => {
       surveyName.value = ''
       isSurveySet.value = false
       isSurveyComplete.value = false
+      clearQuestion()
       router.push('/build')
     }
   }
-  const closeEditor = () => {
-    isModalShown.value = false
-  }
  
   return { 
-    ButtonText, 
+    buttonText, 
     isSurveySet, 
     surveyName, 
     numberOfQuestions, 
@@ -109,12 +125,15 @@ export const dataStore = defineStore('data-store', () => {
     isQuestionValid, 
     isAnswerValid, 
     isSurveyComplete, 
-    isModalShown,
+    isEditorShown,
+    isAddQuestion,
     indexToEdit,
     setSurvey, 
     setQuestion, 
     saveQuestion,
     openEditor,
+    openAddQuestion,
+    closeAddQuestion,
     deleteQuestion,
     closeEditor
   }

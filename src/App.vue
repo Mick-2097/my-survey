@@ -1,16 +1,16 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import Vheader from './components/Vheader.vue';
+import Vheader from './components/Vheader.vue'
 </script>
 
 <template>
   <header>
-    <Vheader HeaderText="My survey"/>
+    <Vheader headerText="My survey" />
   </header>
 
   <RouterView v-slot="{ Component }">
     <transition name="fade" mode="out-in">
-      <component :is="Component"/>
+      <component :is="Component" />
     </transition>
   </RouterView>
 </template>

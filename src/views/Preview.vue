@@ -1,9 +1,11 @@
 <script setup>
 import { dataStore } from '../stores/data-store'
+import { authData } from '../stores/auth-data'
 import Vbutton from '../components/Vbutton.vue'
 import Veditor from '../components/Veditor.vue'
 import Vaddquestion from '../components/Vaddquestion.vue'
 const store = dataStore()
+const auth = authData()
 </script>
 
 <template>
@@ -38,7 +40,11 @@ const store = dataStore()
       </div>
       <div class="buttons">
         <Vbutton buttonText="Add question" @click="store.openAddQuestion" />
-        <Vbutton buttonText="Save survey" />
+        <Vbutton buttonText="Save survey" @click="store.saveSurvey(auth.UID)" />
+        <Vbutton
+          buttonText="Delete survey"
+          @click="store.deleteSurvey(auth.UID, store.indexToEdit)"
+        />
       </div>
     </section>
     <Veditor />

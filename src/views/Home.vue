@@ -1,11 +1,14 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import Vbutton from '../components/Vbutton.vue'
+import { authData } from '../stores/auth-data'
+
+const auth = authData()
 </script>
 
 <template>
-  <section class="no-shadow">
-    <RouterLink to="build">
+  <section>
+    <RouterLink to="my-surveys">
       <Vbutton buttonText="Get started" />
     </RouterLink>
     <h3>About this app</h3>
@@ -41,10 +44,10 @@ h3 {
   margin-bottom: 1rem;
 }
 p {
+  cursor: default;
   text-indent: 3ch;
   line-height: 1.5;
-  width: 40ch;
-  max-width: 290px;
+  max-width: 420px;
   color: var(--light-text);
   padding: 0 1em;
   font-size: 18px;

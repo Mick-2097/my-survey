@@ -6,40 +6,29 @@ My surveys -
     - Create new (button) // Redirect to chose type
     - List of surveys (list)
 
-Chose type -
-    - Options - (list: Title, Description, Button) // Buttons linked to Build
-
 Build page -
     * initial state *
+        - Survey name (Text input)
         - Number of questions (Number input)
 
     * after question number selection *
     ** Question options component **
         - Heading (h3) // eg Question 1 options
         - Question type (dropdown)
+        - Question content (text input)
+
+    * if multiple choice or multiple answer *
         - Number of options (Number input)
-    
-    * after question options *
-    ** Question creator component **
-        - Heading (h3) // eg Question 1 content
-        - Question content (text input)
+        - Options content (Text inputs)
 
-    * after question creator *
-        ** Question options component **
-            - Heading (h3) // eg Question 1 options
-            - Question type (dropdown)
-            - Number of options (Number input)
-
-    * Single or Single Multi *
-        - Question content (text input)
-        - Number of options - (number input)
-        - Answer content - (text inputs) // Number of options will determine how many inputs
-        - Preview (button) // Redirect to Preview
+        - Preview (Button)
 
 Preview -
-    - Survey preview (form)
-    - Keep building (button) // Redirect to Build page
-    - Save (button) // Save survey and redirect to My surveys
+    - Survey preview (Form elements)
+    - Add question (Button)
+    - Save (button) // Save survey to database and redirect to My surveys
+
+    https://console.firebase.google.com/u/0/project/my-survey-6cf05/database/my-survey-6cf05-default-rtdb/data/~2F
 
 __ Data structure __
 
@@ -60,12 +49,9 @@ My surveys
     [
         {
             SurveyName: '',
-            QuestionType: '',
-            QuestionContent: '',
-            Options: [
-                '',
-                '',
-                ''
+            Survey:
+            [
+                SurveyArray
             ]
         }
     ]

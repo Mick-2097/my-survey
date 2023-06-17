@@ -12,3 +12,24 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app"
+// import { getAnalytics } from "firebase/analytics"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCN7Xo_8uJnHr4LZKi0rs7yMTCRITvD5_Y",
+  authDomain: "my-survey-6cf05.firebaseapp.com",
+  databaseURL: "https://my-survey-6cf05-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "my-survey-6cf05",
+  storageBucket: "my-survey-6cf05.appspot.com",
+  messagingSenderId: "872229248906",
+  appId: "1:872229248906:web:7605472b556aac47ffb273",
+  measurementId: "G-L9GWZY0844"
+}
+
+initializeApp(firebaseConfig)
+// const analytics = getAnalytics(app)

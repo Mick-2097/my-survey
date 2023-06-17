@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { getAuth } from 'firebase/auth'
 import Home from '../views/Home.vue'
 import MySurveys from '../views/MySurveys.vue'
 import Build from '../views/Build.vue'
 import Preview from '../views/Preview.vue'
+import Register from '../views/Register.vue'
+import Login from '../views/Login.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,15 +13,32 @@ const router = createRouter({
     {
       path: '/',
       name: 'none',
-      redirect: '/home',
-      component: Home
+      redirect: '/login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
+      meta: {
+        title: 'My survey | Register'
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+      meta: {
+        title: 'My survey | Login'
+      }
     },
     {
       path: '/home',
       name: 'home',
       component: Home,
       meta: {
-        title: 'My survey | Home'
+        title: 'My survey | Home',
+        requiresAuth: true
       }
     },
     {
@@ -26,7 +46,8 @@ const router = createRouter({
       name: 'my-surveys',
       component: MySurveys,
       meta: {
-        title: 'My survey | Surveys'
+        title: 'My survey | Surveys',
+        requiresAuth: true
       }
     },
     {
@@ -34,7 +55,8 @@ const router = createRouter({
       name: 'build',
       component: Build,
       meta: {
-        title: 'My survey | Build'
+        title: 'My survey | Build',
+        requiresAuth: true
       }
     },
     {
@@ -42,7 +64,8 @@ const router = createRouter({
       name: 'preview',
       component: Preview,
       meta: {
-        title: 'My survey | Preview'
+        title: 'My survey | Preview',
+        requiresAuth: true
       }
     }
     
@@ -50,8 +73,18 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = `${to.meta.title}`
-  next()
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (getAuth().currentUser) {
+      document.title = `${to.meta.title}`
+      next()
+    } else {
+      // alert('Access to My survey requires an account')
+      next('/login')
+    }
+  } else {
+    document.title = `${to.meta.title}`
+    next()
+  }
 })
 
 export default router

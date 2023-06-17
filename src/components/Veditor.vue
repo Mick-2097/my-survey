@@ -14,7 +14,7 @@ const store = dataStore()
           <input type="text" v-model="store.surveyArray[store.indexToEdit].QuestionContent" />
         </label>
         <div
-          v-if="store.surveyArray[store.indexToEdit].Options.length"
+          v-if="store.surveyArray[store.indexToEdit].Options"
           v-for="(item, index) in store.surveyArray[store.indexToEdit].Options"
         >
           <label

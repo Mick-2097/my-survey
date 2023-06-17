@@ -73,7 +73,7 @@ option {
 }
 
 input[type=text] {
-    text-align: left;
+    text-align: center;
     padding-left: 1em;
     width: 100%;
 }

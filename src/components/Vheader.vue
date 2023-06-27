@@ -1,6 +1,9 @@
 <script setup>
 import { authData } from '../stores/auth-data'
+import { dataStore } from '../stores/data-store'
+import Vsettings from './Vsettings.vue'
 const auth = authData()
+const store = dataStore()
 const props = defineProps({
   headerText: String
 })
@@ -13,9 +16,12 @@ const props = defineProps({
       <h2>{{ headerText }}</h2>
     </div>
     <div>
-      <button>{{ auth.name }}&nbsp;<img src="../assets/settings.svg" alt="settings icon" /></button>
+      <button v-if="auth.name" @click="store.isSettingsShown = !store.isSettingsShown">
+        {{ auth.name }}&nbsp;<img src="../assets/settings.svg" alt="settings icon" />
+      </button>
     </div>
   </header>
+  <Vsettings class="menu" v-if="store.isSettingsShown" />
 </template>
 
 <style scoped>
@@ -23,9 +29,8 @@ header {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: var(--light-accent);
-  padding: 0.5rem 1rem;
+  background: rgb(226, 226, 255);
+  padding: 0.5rem 0.1rem;
 }
 h2 {
   cursor: default;
@@ -34,26 +39,30 @@ button {
   cursor: pointer;
   font-size: 16px;
   display: flex;
-  align-items: center;
   min-height: fit-content;
-  max-width: 100%;
-  overflow: scroll;
+  justify-self: flex-end;
+  margin-left: auto;
   padding: 0.2rem 0.5rem;
 }
-div:nth-of-type(1) {
+
+header > div:nth-of-type(1) .spacer {
   display: none;
 }
-div:nth-of-type(2) {
+header > div:nth-of-type(2) {
+  margin-right: auto;
   width: 50%;
   display: flex;
   justify-content: center;
 }
-div:nth-of-type(3) {
-  width: 50%;
+header > div:nth-of-type(3) {
+  width: 30%;
   display: flex;
   justify-content: flex-end;
 }
 @media (min-width: 410px) {
+  header {
+    padding: 0.5rem;
+  }
   div:nth-of-type(1) .spacer {
     width: 30%;
     display: flex;

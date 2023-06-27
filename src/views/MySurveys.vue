@@ -1,36 +1,53 @@
 <script setup>
 import Vbutton from '../components/Vbutton.vue'
-import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
 import { dataStore } from '../stores/data-store'
+import { fireBase } from '../stores/fire-base'
 import { authData } from '../stores/auth-data'
-const router = useRouter()
-const auth = authData()
 const store = dataStore()
-const openSurvey = (survey, index) => {
-  store.indexToEdit = index
-  store.surveyName = survey.name
-  store.surveyArray = survey.survey
-  router.push('/preview')
+const fire = fireBase()
+const auth = authData()
+
+onMounted(() => {
+  store.clearQuestion()
+  store.clearSurvey()
+  fire.getSurveys(auth.UID)
+})
+const setRoute = (index) => {
+  store.dynamicRoute = `${auth.UID}/${index}`
 }
 </script>
 
 <template>
   <section>
     <RouterLink to="build">
-      <Vbutton buttonText="Start new"></Vbutton>
+      <Vbutton class="button-dark" @click="store.dataIndex = ''" buttonText="Start new"></Vbutton>
     </RouterLink>
-    <br />
-    <Vbutton buttonText="Show surveys" @click="store.getSurveys(auth.UID)"></Vbutton>
-    <br />
     <ul>
-      <li v-for="(item, index) in store.mySurveys" :key="index">
+      <li v-for="(item, index) in fire.mySurveys" :key="index">
         <p>{{ item.name }}</p>
-        <div>
+        <div class="icons">
+          <RouterLink :to="store.dynamicRoute">
+            <img
+              @click="setRoute(index)"
+              src="../assets/survey.svg"
+              alt="edit button"
+              title="survey page"
+            />
+          </RouterLink>
+          <RouterLink to="results">
+            <img
+              @click="store.dataIndex = index"
+              src="../assets/results.svg"
+              alt="see results"
+              title="see results"
+            />
+          </RouterLink>
           <img
-            src="../assets/edit.svg"
+            src="../assets/new-edit.svg"
             alt="edit button"
-            title="edit this question"
-            @click="openSurvey(item, index)"
+            title="edit this survey"
+            @click="store.openSurvey(item, index)"
           />
         </div>
       </li>
@@ -42,17 +59,28 @@ const openSurvey = (survey, index) => {
 ul {
   width: 100%;
   list-style: none;
+  border-top: 1px solid var(--light-text);
+  margin-top: 2rem;
+  padding-bottom: 2rem;
 }
 li {
+  color: rgb(140, 140, 140);
+  font-weight: bold;
   font-size: large;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
   border-bottom: 1px solid var(--light-text);
+}
+.icons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
 }
 img {
   cursor: pointer;
-  scale: 50%;
 }
 </style>

@@ -6,7 +6,12 @@ const store = dataStore()
 
 <template>
   <transition name="scale" :duration="600">
-    <div class="background" v-if="store.isEditorShown" @click="store.closeEditor">
+    <div
+      class="background"
+      v-if="store.isEditorShown"
+      @click="store.closeEditor"
+      @keydown.esc="store.closeEditor"
+    >
       <div class="modal" @click.stop>
         <h3>Question {{ store.indexToEdit + 1 }}</h3>
         <label
@@ -23,7 +28,7 @@ const store = dataStore()
           </label>
         </div>
         <div class="buttons">
-          <Vbutton buttonText="Save" @click="store.closeEditor" />
+          <Vbutton class="button-dark" buttonText="Save" @click="store.closeEditor" />
           <Vbutton
             class="button-light"
             buttonText="Delete"

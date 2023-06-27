@@ -1,7 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { getAuth } from 'firebase/auth'
+import { browserLocalPersistence, getAuth, setPersistence } from 'firebase/auth'
+import { authData } from '../stores/auth-data'
 import Home from '../views/Home.vue'
 import MySurveys from '../views/MySurveys.vue'
+import SurveyPage from '../views/SurveyPage.vue'
+import Results from '../views/Results.vue'
 import Build from '../views/Build.vue'
 import Preview from '../views/Preview.vue'
 import Register from '../views/Register.vue'
@@ -51,6 +54,24 @@ const router = createRouter({
       }
     },
     {
+      path: '/results/',
+      name: 'results',
+      component: Results,
+      meta: {
+        title: 'My survey | Results',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/:uid/:sid',
+      name: 'survey',
+      component: SurveyPage,
+      meta: {
+        title: 'My survey | Surveys',
+        requiresAuth: false
+      }
+    },
+    {
       path: '/build',
       name: 'build',
       component: Build,
@@ -72,13 +93,17 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (getAuth().currentUser) {
+router.beforeEach(async (to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+  await setPersistence(getAuth(), browserLocalPersistence)
+  if (requiresAuth) {
+    const currentUser = getAuth().currentUser
+    if (currentUser) {
       document.title = `${to.meta.title}`
+      authData().UID = currentUser.uid
+      authData().name = currentUser.displayName
       next()
     } else {
-      // alert('Access to My survey requires an account')
       next('/login')
     }
   } else {

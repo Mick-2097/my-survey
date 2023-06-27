@@ -17,7 +17,12 @@ const store = dataStore()
       <input type="number" v-model="store.numberOfAnswers" @keydown.enter="store.setQuestion" />
     </label>
     <span v-if="!store.isQuestionValid"> Please fill in Question content</span>
-    <Vbutton v-if="!store.isQuestionSet" @click="store.setQuestion" buttonText="Next" />
+    <div class="buttons" v-if="!store.isQuestionSet">
+      <Vbutton class="button-dark" @click="store.setQuestion" buttonText="Next" />
+      <RouterLink to="my-surveys">
+        <Vbutton class="button-light" buttonText="Cancel" />
+      </RouterLink>
+    </div>
     <div
       class="options"
       v-if="store.isQuestionSet"
@@ -30,11 +35,12 @@ const store = dataStore()
       </label>
     </div>
     <span v-if="!store.isAnswerValid">Please complete all options</span>
-    <Vbutton
-      v-if="store.isQuestionSet && !store.isAddQuestion"
-      buttonText="Next"
-      @click="store.saveQuestion"
-    />
+    <div class="buttons" v-if="store.isQuestionSet && !store.isAddQuestion">
+      <Vbutton class="button-dark" buttonText="Next" @click="store.saveQuestion" />
+      <RouterLink to="my-surveys">
+        <Vbutton class="button-light" buttonText="Cancel" />
+      </RouterLink>
+    </div>
   </div>
 </template>
 

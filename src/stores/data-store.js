@@ -1,10 +1,8 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
-import { getDatabase, ref as fbref, push, set, remove, onValue } from 'firebase/database'
 export const dataStore = defineStore('data-store', () => {
   const router = useRouter()
-  const buttonText = ref('')
   const surveyArray = ref([])
   const isSurveySet = ref(false)
   const surveyName = ref('')
@@ -21,47 +19,13 @@ export const dataStore = defineStore('data-store', () => {
   const isSurveyComplete = ref(false)
   const isEditorShown = ref(false)
   const isAddQuestion = ref(false)
-  const indexToEdit = ref ('')
-  const mySurveys = ref([])
-
-  // Firebase
-  const saveSurvey = (UID) => {
-    const database = getDatabase();
-    const surveysRef = fbref(database, `${UID}/surveys`)
-    const surveyData = {
-      name: surveyName.value,
-      survey: [...surveyArray.value]
-    }
-    push(surveysRef, surveyData)
-      .then(() => {
-        console.log('Survey saved')
-        surveyArray.value = []
-        router.push('/my-surveys')
-      })
-      .catch((error) => {
-        console.error('Error:', error)
-      })
-  }
-  const deleteSurvey = (UID, surveyId) => {
-    const surveyRef = fbref(getDatabase(), `${UID}/surveys/${surveyId}`)
-    remove(surveyRef)
-      .then(() => {
-        console.log('Survey deleted')
-        router.push('/my-surveys')
-      })
-      .catch((error) => {
-        console.error('Error:', error)
-      })
-  }
-  const getSurveys = (UID) => {
-    const database = getDatabase()
-    const surveysRef = fbref(database, `${UID}/surveys`)
-    onValue(surveysRef, (snapshot) => {
-      mySurveys.value = snapshot.val()
-    })
-  }
-
-  // Building
+  const isSettingsShown = ref(false)
+  const indexToEdit = ref('')
+  const dataIndex = ref('')
+  const myResults = ref([])
+  const dynamicRoute = ref('')
+  
+  // Build
   const setSurvey = () => {
     if (surveyName.value && numberOfQuestions) {
       isSurveySet.value = true
@@ -69,6 +33,12 @@ export const dataStore = defineStore('data-store', () => {
     } else {
       isSurveyValid.value = false
     }
+  }
+  const clearSurvey = () => {
+    surveyName.value = ''
+    surveyArray.value = []
+    isSurveySet.value = false
+    isSurveyComplete.value = false
   }
   const setQuestion = () => {
     if (questionContent.value && numberOfAnswers.value) {
@@ -91,9 +61,9 @@ export const dataStore = defineStore('data-store', () => {
     answerContentArray.splice(0)
     isQuestionSet.value = false
     numberOfAnswers.value = 2
+    indexToEdit.value = ''
   }
-  const saveQuestion = async () => {
-    await new Promise((resolve) => {
+  const saveQuestion = () => {
       if (questionType.value === 'Text response') {
         numberOfAnswers.value = 0
       }
@@ -105,12 +75,11 @@ export const dataStore = defineStore('data-store', () => {
           QuestionContent: questionContent.value,
           Options: [...answerContentArray]
         })
-        resolve()
         isAddQuestion.value = false
         isQuestionValid.value = true
         isAnswerValid.value = true
       }
-    })
+    
     if (surveyArray.value.length < numberOfQuestions.value) {
       clearQuestion()
     } 
@@ -122,10 +91,11 @@ export const dataStore = defineStore('data-store', () => {
 
 // Editing
   const openEditor = (index) => {
-      indexToEdit.value = index
-      isEditorShown.value = true
+    indexToEdit.value = index
+    isEditorShown.value = true
   }
   const closeEditor = () => {
+    clearQuestion()
     isEditorShown.value = false
   }
   const openAddQuestion = (index) => {
@@ -133,7 +103,9 @@ export const dataStore = defineStore('data-store', () => {
     isAddQuestion.value = true
   }
   const closeAddQuestion = () => {
+    clearQuestion()
     isAddQuestion.value = false
+    isQuestionValid.value = true
   }
   const deleteQuestion = (index) => {
     surveyArray.value.splice(index, 1)
@@ -146,9 +118,14 @@ export const dataStore = defineStore('data-store', () => {
       router.push('/build')
     }
   }
+  const openSurvey = (survey, index) => {
+    dataIndex.value = index
+    surveyName.value = survey.name
+    surveyArray.value = survey.survey
+    router.push('/preview')
+  }
  
   return { 
-    buttonText, 
     isSurveySet, 
     surveyName, 
     numberOfQuestions, 
@@ -166,17 +143,20 @@ export const dataStore = defineStore('data-store', () => {
     isEditorShown,
     isAddQuestion,
     indexToEdit,
-    mySurveys,
-    saveSurvey,
-    deleteSurvey,
-    getSurveys,
+    dataIndex,
+    myResults,
+    isSettingsShown,
+    dynamicRoute,
     setSurvey, 
+    clearSurvey,
     setQuestion, 
+    clearQuestion,
     saveQuestion,
     openEditor,
     openAddQuestion,
     closeAddQuestion,
     deleteQuestion,
-    closeEditor
+    closeEditor,
+    openSurvey
   }
 })

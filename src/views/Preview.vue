@@ -1,17 +1,25 @@
 <script setup>
 import { dataStore } from '../stores/data-store'
+import { fireBase } from '../stores/fire-base'
 import { authData } from '../stores/auth-data'
 import Vbutton from '../components/Vbutton.vue'
 import Veditor from '../components/Veditor.vue'
 import Vaddquestion from '../components/Vaddquestion.vue'
 const store = dataStore()
+const fire = fireBase()
 const auth = authData()
 </script>
 
 <template>
   <div class="container">
     <section>
-      <h2>{{ store.surveyName }}</h2>
+      <textarea
+        class="survey-name"
+        type="text"
+        rows="4"
+        v-model="store.surveyName"
+        title="Click to edit survey title"
+      ></textarea>
       <div class="card" v-for="(item, index) in store.surveyArray" :key="index">
         <h3>{{ item.QuestionContent }}?</h3>
         <div v-if="item.QuestionType === 'Text response'">
@@ -32,18 +40,23 @@ const auth = authData()
           </label>
         </div>
         <img
-          src="../assets/edit.svg"
+          src="../assets/new-edit.svg"
           alt="edit button"
           title="edit this question"
           @click="store.openEditor(index)"
         />
       </div>
       <div class="buttons">
-        <Vbutton buttonText="Add question" @click="store.openAddQuestion" />
-        <Vbutton buttonText="Save survey" @click="store.saveSurvey(auth.UID)" />
+        <Vbutton buttonText="Add question" class="button-dark" @click="store.openAddQuestion" />
+        <Vbutton buttonText="Save" class="button-dark" @click="fire.saveSurvey(auth.UID)" />
+        <RouterLink to="my-surveys">
+          <Vbutton class="button-light" buttonText="Cancel" />
+        </RouterLink>
         <Vbutton
+          class="button-light"
+          v-if="store.dataIndex"
           buttonText="Delete survey"
-          @click="store.deleteSurvey(auth.UID, store.indexToEdit)"
+          @click="fire.deleteSurvey(auth.UID, store.dataIndex)"
         />
       </div>
     </section>
@@ -53,6 +66,15 @@ const auth = authData()
 </template>
 
 <style scoped>
+.survey-name {
+  text-align: center;
+  border: none;
+  margin-bottom: 1rem;
+  color: var(--light-text);
+  width: 100%;
+  padding: 0 1rem;
+  font-size: 24px;
+}
 h2 {
   margin-bottom: 2rem;
 }
@@ -62,15 +84,7 @@ h3 {
 }
 img {
   cursor: pointer;
-  scale: 50%;
   float: right;
-}
-.card {
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border-radius: 8px;
-  outline: 1px solid rgba(0, 0, 0, 0.2);
 }
 .card:last-of-type {
   margin-bottom: 4rem;

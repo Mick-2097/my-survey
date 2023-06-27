@@ -9,7 +9,7 @@ const auth = authData()
 <template>
   <section>
     <RouterLink to="my-surveys">
-      <Vbutton buttonText="Get started" />
+      <Vbutton class="button-dark" buttonText="Get started" />
     </RouterLink>
     <h3>About this app</h3>
     <p>

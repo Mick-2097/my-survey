@@ -1,8 +1,7 @@
 import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import { initializeApp } from "firebase/app"
 import App from './App.vue'
 import router from './router'
 
@@ -13,10 +12,6 @@ app.use(router)
 
 app.mount('#app')
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app"
-// import { getAnalytics } from "firebase/analytics"
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,4 +27,3 @@ const firebaseConfig = {
 }
 
 initializeApp(firebaseConfig)
-// const analytics = getAnalytics(app)

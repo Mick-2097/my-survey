@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
+
 import { 
     getAuth, 
     createUserWithEmailAndPassword,
@@ -45,10 +46,13 @@ export const authData = defineStore('auth-data', () => {
     const logOut = () => {
         signOut(getAuth())
         .then(() => {
+            UID.value = ''
+            name.value = ''
             console.log('Signed out')
             router.push('/login')
         })
     }
+    
     return {
         name,
         email,

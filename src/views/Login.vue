@@ -15,7 +15,7 @@ const auth = authData()
       <input type="password" v-model="auth.password" placeholder="Password" />
     </label>
     <div class="wrapper">
-      <Vbutton buttonText="Sign in" @click="auth.login" />
+      <Vbutton class="button-dark" buttonText="Sign in" @click="auth.login" />
     </div>
     <p>Don't hava an account? <RouterLink to="register">Register here</RouterLink></p>
   </section>

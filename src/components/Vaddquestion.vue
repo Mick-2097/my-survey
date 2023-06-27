@@ -29,11 +29,18 @@ const store = dataStore()
         </section>
         <div class="buttons" v-if="store.isAddQuestion">
           <Vbutton
+            class="button-dark"
             v-if="store.isAddQuestion && store.isQuestionSet"
             @click="store.saveQuestion"
             buttonText="Save"
           />
-          <Vbutton buttonText="Cancel" @click="store.closeAddQuestion" />
+          <Vbutton
+            class="button-dark"
+            v-if="store.questionType === 'Text response'"
+            @click="store.saveQuestion"
+            buttonText="Save"
+          />
+          <Vbutton class="button-light" buttonText="Cancel" @click="store.closeAddQuestion" />
         </div>
       </div>
     </div>

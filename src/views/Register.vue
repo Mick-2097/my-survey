@@ -8,7 +8,13 @@ const auth = authData()
   <section>
     <label>
       Name:
-      <input type="text" v-model="auth.name" placeholder="First name" />
+      <input
+        type="text"
+        v-model="auth.name"
+        placeholder="Enter name"
+        maxlength="16"
+        title="max length 16 characters"
+      />
     </label>
     <label>
       Email:
@@ -19,7 +25,7 @@ const auth = authData()
       <input type="password" v-model="auth.password" placeholder="Password" />
     </label>
     <div class="wrapper">
-      <Vbutton buttonText="Register" @click="auth.registerUser" />
+      <Vbutton class="button-dark" buttonText="Register" @click="auth.registerUser" />
     </div>
     <p>Already hava an account? <RouterLink to="login">Sign in here</RouterLink></p>
   </section>

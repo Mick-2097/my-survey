@@ -50,7 +50,7 @@ const store = dataStore()
       <Vquestionmulti v-if="store.questionType === 'Multiple choice'" />
       <Vquestionmulti v-if="store.questionType === 'Multiple answer'" />
       <div class="wrapper" v-if="store.questionType === 'Text response'">
-        <label title="The question you would like to ask">
+        <label title="The question you would like to ask Do not include a question mark">
           Question content:
           <input type="text" v-model="store.questionContent" />
         </label>
@@ -65,7 +65,7 @@ const store = dataStore()
     </section>
     <div class="wrapper" v-if="store.isSurveyComplete">
       <RouterLink to="preview">
-        <Vbutton class="button-dark" buttonText="Preview" />
+        <Vbutton class="button-dark preview-button" buttonText="Preview" />
       </RouterLink>
     </div>
   </div>
@@ -77,5 +77,8 @@ h3 {
 }
 span {
   color: rgb(225, 28, 28);
+}
+.preview-button {
+  margin-top: 6rem;
 }
 </style>

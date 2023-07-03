@@ -29,7 +29,7 @@ const store = dataStore()
       v-for="index in store.setAnswersArray"
       :key="index"
     >
-      <label title="An available answer">
+      <label title="An available answer Do not include a question mark">
         Option {{ index + 1 }}:
         <input type="text" v-model="store.answerContentArray[index]" />
       </label>

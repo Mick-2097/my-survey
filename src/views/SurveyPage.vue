@@ -42,9 +42,8 @@ const setResult = () => {
       return response !== '' && response.length !== 0
     }
   })
-
   if (isResultValid.value) {
-    result.value = fire.getDynamicSurvey.survey.map((item, index) => {
+    result.value = fire.dynamicSurvey.survey.map((item, index) => {
       let answer
       if (item.QuestionType === 'Text response') {
         answer = responseArray.value[index]
@@ -55,11 +54,14 @@ const setResult = () => {
       if (item.QuestionType === 'Multiple answer') {
         answer = [...responseArray.value[index]]
       }
-      return { question: String(item.QuestionContent), answer: answer }
+      return {
+        question: String(item.QuestionContent),
+        type: String(item.QuestionType),
+        answer: answer
+      }
     })
     fire.saveResult(UID, SID, formattedDateTime, result.value)
     thanks.value = true
-  } else {
   }
 }
 </script>
@@ -76,7 +78,6 @@ const setResult = () => {
         title="Copy a link to this survey"
       />
     </div>
-
     <div class="container">
       <div class="card" v-for="(item, index) in fire.dynamicSurvey.survey" :key="index">
         <h3>{{ index + 1 }}. {{ item.QuestionContent }}?</h3>
@@ -126,14 +127,6 @@ const setResult = () => {
 </template>
 
 <style scoped>
-.heading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 0 1rem 30px;
-  width: 100%;
-}
 h2 {
   flex-grow: 1;
   color: var(--light-text);
@@ -144,6 +137,7 @@ h2 {
 }
 h3 {
   color: var(--light-text);
+  margin-bottom: 1rem;
 }
 .container {
   padding-top: 2rem;

@@ -11,7 +11,7 @@ const auth = authData()
       <input
         type="text"
         v-model="auth.name"
-        placeholder="Enter name"
+        placeholder="First name"
         maxlength="16"
         title="max length 16 characters"
       />

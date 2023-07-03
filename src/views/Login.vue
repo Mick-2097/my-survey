@@ -5,7 +5,7 @@ const auth = authData()
 </script>
 
 <template>
-  <section>
+  <section @keydown.enter="auth.login">
     <label>
       Email:
       <input type="email" v-model="auth.email" placeholder="Email address" />

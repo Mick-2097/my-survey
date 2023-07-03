@@ -14,7 +14,7 @@ button {
   width: 280px;
 }
 
-@media (min-width: 520px) {
+@media (min-width: 410px) {
   button {
     width: fit-content;
   }

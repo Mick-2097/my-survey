@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "$userId": {
+      "surveys": {
+        ".read": "data.exists()",
+        ".write": "auth != null && $userId === auth.uid"
+      },
+      "results": {
+      	".read": "auth != null && $userId === auth.uid",
+        ".write": "auth != null && $userId === auth.uid",
+       	"$resultId": {
+          ".write": "!data.exists()"
+       	}
+      }
+    }
+  }
+}
+
+
+
+
+
+

@@ -34,19 +34,17 @@ export const fireBase = defineStore('fire-base', () => {
         }
     }
     const saveResult = (UID, SID, time, response) => {
-    const database = getDatabase()
-    const resultRef = fbref(database, `${UID}/results/${SID}`)
-    const resultData = {
-        timestamp: time,
-        response: response
-    }
-    push(resultRef, resultData).then(() => {
-        console.log('result saved')
-
-        //Render info on page
-    }).catch((error) => {
-        console.error('Error:', error)
-    })
+        const database = getDatabase()
+        const resultRef = fbref(database, `${UID}/results/${SID}`)
+        const resultData = {
+            timestamp: time,
+            response: response
+        }
+        push(resultRef, resultData).then(() => {
+            console.log('result saved')
+        }).catch((error) => {
+            console.error('Error:', error)
+        })
     }
     const replaceSurvey = (UID, surveyId) => {
     const database = getDatabase()

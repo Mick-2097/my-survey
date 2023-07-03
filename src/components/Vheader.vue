@@ -41,10 +41,9 @@ button {
   display: flex;
   min-height: fit-content;
   justify-self: flex-end;
-  margin-left: auto;
+  margin: 0 0.5rem 0 auto;
   padding: 0.2rem 0.5rem;
 }
-
 header > div:nth-of-type(1) .spacer {
   display: none;
 }

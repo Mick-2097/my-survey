@@ -7,7 +7,6 @@ import Vheader from './components/Vheader.vue'
   <header>
     <Vheader headerText="My survey" />
   </header>
-
   <RouterView v-slot="{ Component }">
     <transition name="fade" mode="out-in">
       <component :is="Component" />
@@ -18,6 +17,6 @@ import Vheader from './components/Vheader.vue'
 <style scoped>
 header {
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 }
 </style>

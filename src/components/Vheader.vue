@@ -39,7 +39,7 @@ button {
   cursor: pointer;
   font-size: 16px;
   display: flex;
-  min-height: fit-content;
+  height: fit-content;
   justify-self: flex-end;
   margin: 0 0.5rem 0 auto;
   padding: 0.2rem 0.5rem;

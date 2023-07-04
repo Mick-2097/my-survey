@@ -24,19 +24,19 @@ const auth = authData()
         <h3>{{ item.QuestionContent }}?</h3>
         <div v-if="item.QuestionType === 'Text response'">
           <label>
-            <input type="text" />
+            <input type="text" disabled />
           </label>
         </div>
         <div v-if="item.QuestionType === 'Multiple choice'" v-for="option in item.Options">
           <label>
             {{ option }}
-            <input type="radio" :name="index" />
+            <input type="radio" :name="index" disabled />
           </label>
         </div>
         <div v-if="item.QuestionType === 'Multiple answer'" v-for="option in item.Options">
           <label>
             {{ option }}
-            <input type="checkbox" />
+            <input type="checkbox" disabled />
           </label>
         </div>
         <img

@@ -46,7 +46,7 @@ const setRoute = (index) => {
             <img
               @click="setRoute(index)"
               src="../assets/survey.svg"
-              alt="edit button"
+              alt="view survey"
               title="survey page"
             />
           </RouterLink>
@@ -54,27 +54,26 @@ const setRoute = (index) => {
             <img
               @click="store.dataIndex = index"
               src="../assets/results.svg"
-              alt="see results"
+              alt="See results"
               title="see results"
             />
           </RouterLink>
           <img
             src="../assets/new-edit.svg"
             alt="edit button"
-            title="edit this survey"
+            title="Edit this survey"
             @click="store.openSurvey(item, index)"
           />
           <img
             @click="copyURL(index)"
             class="share-button"
             src="../assets/share.svg"
-            alt="Copy a link to this survey"
+            alt="Share this survey"
             title="Copy a link to this survey"
           />
         </div>
       </li>
     </ul>
-    <input class="url" type="text" style="display: none" v-model="url" />
   </section>
 </template>
 

@@ -1,12 +1,27 @@
 <script setup>
 import Vbutton from '../components/Vbutton.vue'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { dataStore } from '../stores/data-store'
 import { fireBase } from '../stores/fire-base'
 import { authData } from '../stores/auth-data'
 const store = dataStore()
 const fire = fireBase()
 const auth = authData()
+const url = ref('')
+
+const copyURL = (SID) => {
+  url.value = `${window.location.origin}/${auth.UID}/${SID}`
+  navigator
+    .share({
+      url: url.value
+    })
+    .then(() => {
+      console.log('shared')
+    })
+    .catch(() => {
+      console.log('share failed')
+    })
+}
 
 onMounted(() => {
   store.clearQuestion()
@@ -49,9 +64,17 @@ const setRoute = (index) => {
             title="edit this survey"
             @click="store.openSurvey(item, index)"
           />
+          <img
+            @click="copyURL(index)"
+            class="share-button"
+            src="../assets/share.svg"
+            alt="Copy a link to this survey"
+            title="Copy a link to this survey"
+          />
         </div>
       </li>
     </ul>
+    <input class="url" type="text" style="display: none" v-model="url" />
   </section>
 </template>
 

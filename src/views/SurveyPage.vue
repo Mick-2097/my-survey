@@ -70,13 +70,6 @@ const setResult = () => {
   <section v-if="!thanks">
     <div class="heading">
       <h2>{{ fire.dynamicSurvey.name }}</h2>
-      <img
-        @click="copyURL"
-        class="share-button"
-        src="../assets/share.svg"
-        alt="Copy a link to this survey"
-        title="Copy a link to this survey"
-      />
     </div>
     <div class="container">
       <div class="card" v-for="(item, index) in fire.dynamicSurvey.survey" :key="index">

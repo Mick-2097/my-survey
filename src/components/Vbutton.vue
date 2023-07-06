@@ -11,12 +11,8 @@ const props = defineProps({
 
 <style scoped>
 button {
+  max-width: 100%;
   width: 280px;
-}
-
-@media (min-width: 410px) {
-  button {
-    width: fit-content;
-  }
+  min-width: fit-content;
 }
 </style>

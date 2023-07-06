@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import { authData } from '../stores/auth-data'
 import { dataStore } from '../stores/data-store'
 import Vsettings from './Vsettings.vue'
@@ -6,6 +7,15 @@ const auth = authData()
 const store = dataStore()
 const props = defineProps({
   headerText: String
+})
+onMounted(() => {
+  window.addEventListener('click', (event) => {
+    if (event.target.closest('.home')) {
+      store.isSettingsShown = !store.isSettingsShown
+    } else {
+      store.isSettingsShown = false
+    }
+  })
 })
 </script>
 
@@ -16,7 +26,7 @@ const props = defineProps({
       <h2>{{ headerText }}</h2>
     </div>
     <div>
-      <button v-if="auth.name" @click="store.isSettingsShown = !store.isSettingsShown">
+      <button v-if="auth.name" class="home">
         {{ auth.name }}&nbsp;<img src="../assets/settings.svg" alt="settings icon" />
       </button>
     </div>
@@ -43,6 +53,13 @@ button {
   justify-self: flex-end;
   margin: 0 0.5rem 0 auto;
   padding: 0.2rem 0.5rem;
+  color: var(--mid-accent);
+  border: 1px solid var(--mid-accent);
+  border-radius: 5px;
+}
+button:hover {
+  border-bottom: 2px solid var(--mid-accent);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
 }
 header > div:nth-of-type(1) .spacer {
   display: none;

@@ -1,10 +1,12 @@
 <script setup>
+import { useRouter } from 'vue-router'
 import { dataStore } from '../stores/data-store'
 import { fireBase } from '../stores/fire-base'
 import { authData } from '../stores/auth-data'
 import Vbutton from '../components/Vbutton.vue'
 import Veditor from '../components/Veditor.vue'
 import Vaddquestion from '../components/Vaddquestion.vue'
+const router = useRouter()
 const store = dataStore()
 const fire = fireBase()
 const auth = authData()
@@ -49,9 +51,7 @@ const auth = authData()
       <div class="buttons">
         <Vbutton buttonText="Add question" class="button-dark" @click="store.openAddQuestion" />
         <Vbutton buttonText="Save" class="button-dark" @click="fire.saveSurvey(auth.UID)" />
-        <RouterLink to="my-surveys">
-          <Vbutton class="button-light" buttonText="Cancel" />
-        </RouterLink>
+        <Vbutton @click="router.push('my-surveys')" class="button-light" buttonText="Cancel" />
         <Vbutton
           class="button-light"
           v-if="store.dataIndex"

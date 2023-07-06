@@ -14,6 +14,10 @@ const homeClick = () => {
   store.isSettingsShown = false
   router.push('home')
 }
+const AccountClick = () => {
+  store.isSettingsShown = false
+  store.isAccountShown = true
+}
 </script>
 
 <template>
@@ -21,7 +25,7 @@ const homeClick = () => {
     <RouterLink :to="{ path: '/home' }">
       <button @click="homeClick" class="about">Home</button>
     </RouterLink>
-    <button @click="store.isSettingsShown = false">Account</button>
+    <button @click="AccountClick">Account</button>
     <button @click="logout">Log out</button>
   </div>
 </template>

@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { authData } from '../stores/auth-data'
 import { dataStore } from '../stores/data-store'
 import Vsettings from './Vsettings.vue'
+import Vaccount from './Vaccount.vue'
 const auth = authData()
 const store = dataStore()
 const props = defineProps({
@@ -32,6 +33,7 @@ onMounted(() => {
     </div>
   </header>
   <Vsettings class="menu" v-if="store.isSettingsShown" />
+  <Vaccount />
 </template>
 
 <style scoped>
@@ -49,7 +51,8 @@ button {
   cursor: pointer;
   font-size: 16px;
   display: flex;
-  height: fit-content;
+  flex-grow: 0;
+  max-height: fit-content;
   justify-self: flex-end;
   margin: 0 0.5rem 0 auto;
   padding: 0.2rem 0.5rem;

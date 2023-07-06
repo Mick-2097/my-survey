@@ -10,8 +10,8 @@ export const dataStore = defineStore('data-store', () => {
   const questionType = ref('')
   const questionContent = ref('')
   const numberOfAnswers = ref(2)
-  const setAnswersArray = ([])
-  const answerContentArray = ([])
+  const setAnswersArray = []
+  const answerContentArray = []
   const isQuestionSet = ref(false)
   const isSurveyValid = ref(true)
   const isQuestionValid = ref(true)
@@ -20,11 +20,12 @@ export const dataStore = defineStore('data-store', () => {
   const isEditorShown = ref(false)
   const isAddQuestion = ref(false)
   const isSettingsShown = ref(false)
+  const isAccountShown = ref(false)
   const indexToEdit = ref('')
   const dataIndex = ref('')
   const myResults = ref([])
   const dynamicRoute = ref('')
-  
+
   // Build
   const setSurvey = () => {
     if (surveyName.value && numberOfQuestions) {
@@ -64,32 +65,32 @@ export const dataStore = defineStore('data-store', () => {
     indexToEdit.value = ''
   }
   const saveQuestion = () => {
-      if (questionType.value === 'Text response') {
-        numberOfAnswers.value = 0
-      }
-      if (numberOfAnswers.value !== answerContentArray.length) {
-        isAnswerValid.value = false
-      } else {
-        surveyArray.value.push({
-          QuestionType: questionType.value,
-          QuestionContent: questionContent.value,
-          Options: [...answerContentArray]
-        })
-        isAddQuestion.value = false
-        isQuestionValid.value = true
-        isAnswerValid.value = true
-      }
-    
+    if (questionType.value === 'Text response') {
+      numberOfAnswers.value = 0
+    }
+    if (numberOfAnswers.value !== answerContentArray.length) {
+      isAnswerValid.value = false
+    } else {
+      surveyArray.value.push({
+        QuestionType: questionType.value,
+        QuestionContent: questionContent.value,
+        Options: [...answerContentArray]
+      })
+      isAddQuestion.value = false
+      isQuestionValid.value = true
+      isAnswerValid.value = true
+    }
+
     if (surveyArray.value.length < numberOfQuestions.value) {
       clearQuestion()
-    } 
+    }
     if (surveyArray.value.length === numberOfQuestions.value) {
       isSurveyComplete.value = true
       clearQuestion()
     }
   }
 
-// Editing
+  // Editing
   const openEditor = (index) => {
     indexToEdit.value = index
     isEditorShown.value = true
@@ -124,32 +125,33 @@ export const dataStore = defineStore('data-store', () => {
     surveyArray.value = survey.survey
     router.push('/preview')
   }
- 
-  return { 
-    isSurveySet, 
-    surveyName, 
-    numberOfQuestions, 
-    surveyArray, 
-    questionType, 
-    questionContent, 
-    numberOfAnswers, 
-    setAnswersArray, 
-    answerContentArray, 
-    isQuestionSet, 
-    isSurveyValid, 
-    isQuestionValid, 
-    isAnswerValid, 
-    isSurveyComplete, 
+
+  return {
+    isSurveySet,
+    surveyName,
+    numberOfQuestions,
+    surveyArray,
+    questionType,
+    questionContent,
+    numberOfAnswers,
+    setAnswersArray,
+    answerContentArray,
+    isQuestionSet,
+    isSurveyValid,
+    isQuestionValid,
+    isAnswerValid,
+    isSurveyComplete,
     isEditorShown,
     isAddQuestion,
     indexToEdit,
     dataIndex,
     myResults,
     isSettingsShown,
+    isAccountShown,
     dynamicRoute,
-    setSurvey, 
+    setSurvey,
     clearSurvey,
-    setQuestion, 
+    setQuestion,
     clearQuestion,
     saveQuestion,
     openEditor,

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { browserLocalPersistence, getAuth, setPersistence } from 'firebase/auth'
+import { onAuthStateChanged, browserLocalPersistence, getAuth, setPersistence } from 'firebase/auth'
 import { authData } from '../stores/auth-data'
 import Home from '../views/Home.vue'
 import MySurveys from '../views/MySurveys.vue'
@@ -95,12 +95,20 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
   await setPersistence(getAuth(), browserLocalPersistence)
+
   if (requiresAuth) {
-    const currentUser = getAuth().currentUser
-    if (currentUser) {
+    const user = await new Promise((resolve) => {
+      const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+        unsubscribe()
+        resolve(user)
+      })
+    })
+    if (user) {
       document.title = `${to.meta.title}`
-      authData().UID = currentUser.uid
-      authData().name = currentUser.displayName
+      authData().UID = user.uid
+      authData().name = user.displayName
+      const token = await user.getIdToken()
+      localStorage.setItem('firebaseToken', token)
       next()
     } else {
       next('/login')

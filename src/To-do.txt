@@ -1,4 +1,6 @@
-- Account page
-- Save results
-- View results
-- ??
+- state persistence (token)             x
+- handle incorrect login                x
+- delete account                        
+- number of questions ()                x
+- delete question on preview
+- survey name                           x

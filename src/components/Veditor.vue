@@ -14,7 +14,6 @@ const store = dataStore()
     >
       <div class="modal" @click.stop>
         <div class="card">
-          <h3>Question {{ store.indexToEdit + 1 }}</h3>
           <label
             >Question content:
             <input type="text" v-model="store.surveyArray[store.indexToEdit].QuestionContent" />

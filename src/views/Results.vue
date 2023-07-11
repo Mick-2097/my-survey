@@ -23,7 +23,7 @@ const showResult = (index) => {
   <section>
     <div v-if="!isResultSelected" class="heading">
       <h2>Responses</h2>
-      <img @click="router.push('my-surveys')" src="../assets/back.svg" alt="back button" />
+      <img @click="router.go(-1)" src="../assets/back.svg" alt="back button" />
     </div>
     <div v-else class="heading">
       <h2>Results</h2>

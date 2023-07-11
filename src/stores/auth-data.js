@@ -14,6 +14,8 @@ export const authData = defineStore('auth-data', () => {
   const email = ref('')
   const password = ref('')
   const UID = ref({})
+  const isError = ref(false)
+  const errorMessage = ref('')
 
   const registerUser = () => {
     createUserWithEmailAndPassword(getAuth(), email.value, password.value)
@@ -45,9 +47,12 @@ export const authData = defineStore('auth-data', () => {
       .then((data) => {
         UID.value = data.user.uid
         name.value = data.user.displayName
+        isError.value = false
         router.push('/home')
       })
       .catch((error) => {
+        isError.value = true
+        errorMessage.value = error.message
         console.log(error.message)
       })
   }
@@ -66,6 +71,8 @@ export const authData = defineStore('auth-data', () => {
     email,
     password,
     UID,
+    isError,
+    errorMessage,
     registerUser,
     updateName,
     login,

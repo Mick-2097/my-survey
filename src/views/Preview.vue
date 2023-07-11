@@ -15,15 +15,17 @@ const auth = authData()
 <template>
   <div class="container">
     <section>
-      <textarea
-        class="survey-name"
-        type="text"
-        rows="4"
-        v-model="store.surveyName"
-        title="Click to edit survey title"
-      ></textarea>
+      <div class="heading">
+        <textarea
+          class="survey-name"
+          type="text"
+          v-model="store.surveyName"
+          title="Click to edit survey title"
+        ></textarea>
+        <img @click="router.go(-1)" src="../assets/back.svg" alt="back button" />
+      </div>
       <div class="card" v-for="(item, index) in store.surveyArray" :key="index">
-        <h3>{{ item.QuestionContent }}?</h3>
+        <h3>{{ item.QuestionContent }}</h3>
         <div v-if="item.QuestionType === 'Text response'">
           <label>
             <input type="text" disabled />
@@ -50,8 +52,7 @@ const auth = authData()
       </div>
       <div class="buttons">
         <Vbutton buttonText="Add question" class="button-dark" @click="store.openAddQuestion" />
-        <Vbutton buttonText="Save" class="button-dark" @click="fire.saveSurvey(auth.UID)" />
-        <Vbutton @click="router.push('my-surveys')" class="button-light" buttonText="Cancel" />
+        <Vbutton buttonText="Save survey" class="button-dark" @click="fire.saveSurvey(auth.UID)" />
         <Vbutton
           class="button-light"
           v-if="store.dataIndex"
@@ -70,10 +71,11 @@ const auth = authData()
   text-align: center;
   border: none;
   margin-bottom: 1rem;
-  color: var(--light-text);
   width: 100%;
   padding: 0 1rem;
   font-size: 24px;
+  min-height: fit-content;
+  resize: none;
 }
 h2 {
   margin-bottom: 2rem;

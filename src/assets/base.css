@@ -94,6 +94,7 @@ input[type='text'] {
   text-align: center;
   padding-left: 1em;
   width: 100%;
+  background: white;
 }
 input[type='number'] {
   width: 200px;
@@ -123,6 +124,8 @@ input[type='checkbox'] {
   padding: 1rem;
   border-radius: 8px;
   outline: 1px solid rgba(0, 0, 0, 0.2);
+  max-height: 80vh;
+  overflow: scroll;
 }
 .modal {
   background-color: white;

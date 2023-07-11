@@ -16,7 +16,7 @@ const copyURL = (SID) => {
       url: url.value
     })
     .then(() => {
-      console.log('shared')
+      // console.log('shared')
     })
     .catch(() => {
       console.log('share failed')

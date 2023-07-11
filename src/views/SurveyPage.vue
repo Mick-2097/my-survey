@@ -10,16 +10,6 @@ const result = ref([])
 const isResultValid = ref(true)
 const thanks = ref(false)
 
-const copyURL = () => {
-  navigator.clipboard
-    .writeText(window.location.href)
-    .then(() => {
-      alert('URL copied to clipboard')
-    })
-    .catch((err) => {
-      alert('Failed to copy URL to clipboard:', err)
-    })
-}
 const currentDate = new Date()
 const options = {
   day: '2-digit',

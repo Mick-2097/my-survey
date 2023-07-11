@@ -4,109 +4,108 @@ import { dataStore } from './data-store'
 import { getDatabase, ref as fbref, push, set, remove, onValue } from 'firebase/database'
 import { useRouter } from 'vue-router'
 
-
 export const fireBase = defineStore('fire-base', () => {
-    const store = dataStore()
-    const router = useRouter()
-    const mySurveys = ref([])
-    const myResults = ref([])
-    const dynamicSurvey = ref([])
+  const store = dataStore()
+  const router = useRouter()
+  const mySurveys = ref([])
+  const myResults = ref([])
+  const dynamicSurvey = ref([])
 
-    
-    const saveSurvey = (UID) => {
-        if (store.dataIndex) {
-          replaceSurvey(UID, store.dataIndex)
-        } else {
-          const database = getDatabase()
-          const surveysRef = fbref(database, `${UID}/surveys`)
-          const surveyData = {
-            name: store.surveyName,
-            survey: [...store.surveyArray]
-          }
-          push(surveysRef, surveyData)
-            .then(() => {
-              store.surveyArray.value = []
-              router.push('/my-surveys')
-            })
-            .catch((error) => {
-              console.error('Error:', error)
-            })
-        }
-    }
-    const saveResult = (UID, SID, time, response) => {
-        const database = getDatabase()
-        const resultRef = fbref(database, `${UID}/results/${SID}`)
-        const resultData = {
-            timestamp: time,
-            response: response
-        }
-        push(resultRef, resultData).then(() => {
-            console.log('result saved')
-        }).catch((error) => {
-            console.error('Error:', error)
+  const saveSurvey = (UID) => {
+    if (store.dataIndex) {
+      replaceSurvey(UID, store.dataIndex)
+    } else {
+      const database = getDatabase()
+      const surveysRef = fbref(database, `${UID}/surveys`)
+      const surveyData = {
+        name: store.surveyName,
+        survey: [...store.surveyArray]
+      }
+      push(surveysRef, surveyData)
+        .then(() => {
+          store.surveyArray.value = []
+          router.push('/my-surveys')
+        })
+        .catch((error) => {
+          console.error('Error:', error)
         })
     }
-    const replaceSurvey = (UID, surveyId) => {
+  }
+  const saveResult = (UID, SID, time, response) => {
+    const database = getDatabase()
+    const resultRef = fbref(database, `${UID}/results/${SID}`)
+    const resultData = {
+      timestamp: time,
+      response: response
+    }
+    push(resultRef, resultData)
+      .then(() => {
+        console.log('result saved')
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+      })
+  }
+  const replaceSurvey = (UID, surveyId) => {
     const database = getDatabase()
     const surveyRef = fbref(database, `${UID}/surveys/${surveyId}`)
     const surveyData = {
-        name: store.surveyName,
-        survey: [...store.surveyArray]
+      name: store.surveyName,
+      survey: [...store.surveyArray]
     }
     set(surveyRef, surveyData)
-        .then(() => {
+      .then(() => {
         router.push('/my-surveys')
-        })
-        .catch((error) => {
+      })
+      .catch((error) => {
         console.error('Error:', error)
-        })
-    }
-    const deleteSurvey = (UID, surveyId) => {
+      })
+  }
+  const deleteSurvey = (UID, SID) => {
     const database = getDatabase()
-    const surveyRef = fbref(database, `${UID}/surveys/${surveyId}`)
+    const surveyRef = fbref(database, `${UID}/surveys/${SID}`)
     remove(surveyRef)
-        .then(() => {
-        console.log('Survey deleted')
+      .then(() => {
         store.clearQuestion()
         router.push('/my-surveys')
-        })
-        .catch((error) => {
+      })
+      .catch((error) => {
         console.error('Error:', error)
-        })
-    }
-    const getSurveys = (UID) => {
+      })
+  }
+  const getSurveys = (UID) => {
     const database = getDatabase()
     const surveysRef = fbref(database, `${UID}/surveys`)
     onValue(surveysRef, (snapshot) => {
-        mySurveys.value = snapshot.val()
+      mySurveys.value = snapshot.val()
     })
-    }
-    const getResults = (UID, SID) => {
+  }
+  const getResults = (UID, SID) => {
     const database = getDatabase()
     const resultsRef = fbref(database, `${UID}/results/${SID}`)
     onValue(resultsRef, (snapshot) => {
-        myResults.value = snapshot.val()
+      myResults.value = snapshot.val()
     })
-    }
-    const getDynamicSurvey = (UID, SID, callBack = null) => {
+  }
+  const getDynamicSurvey = (UID, SID, callBack = null) => {
     const database = getDatabase()
     const surveysRef = fbref(database, `${UID}/surveys/${SID}`)
     onValue(surveysRef, (snapshot) => {
-        dynamicSurvey.value = snapshot.val()
-        if (callBack) {
+      dynamicSurvey.value = snapshot.val()
+      if (callBack) {
         callBack(dynamicSurvey.value)
-        }
+      }
     })
-    }
-    return {
-        mySurveys,
-        myResults,
-        dynamicSurvey,
-        saveResult,
-        saveSurvey,
-        deleteSurvey,
-        getSurveys,
-        getResults,
-        getDynamicSurvey,
-    }
+  }
+  return {
+    mySurveys,
+    myResults,
+    dynamicSurvey,
+    saveResult,
+    saveSurvey,
+    deleteSurvey,
+    getSurveys,
+    getResults,
+    getDynamicSurvey
+  }
 })

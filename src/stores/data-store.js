@@ -41,11 +41,22 @@ export const dataStore = defineStore('data-store', () => {
     isSurveySet.value = false
     isSurveyComplete.value = false
   }
+  // const setQuestion = () => {
+  //   if (questionContent.value && numberOfAnswers.value) {
+  //     for (let i = 0; i < numberOfAnswers.value; i++) {
+  //       setAnswersArray.push(i)
+  //     }
+  //     isQuestionValid.value = true
+  //     isQuestionSet.value = true
+  //   } else {
+  //     isQuestionValid.value = false
+  //   }
+  //   if (questionType.value === 'Text response' && isQuestionSet.value) {
+  //     saveQuestion()
+  //   }
+  // }
   const setQuestion = () => {
-    if (questionContent.value && numberOfAnswers.value) {
-      for (let i = 0; i < numberOfAnswers.value; i++) {
-        setAnswersArray.push(i)
-      }
+    if (questionContent.value) {
       isQuestionValid.value = true
       isQuestionSet.value = true
     } else {
@@ -80,14 +91,14 @@ export const dataStore = defineStore('data-store', () => {
       isQuestionValid.value = true
       isAnswerValid.value = true
     }
-
-    if (surveyArray.value.length < numberOfQuestions.value) {
-      clearQuestion()
-    }
-    if (surveyArray.value.length === numberOfQuestions.value) {
-      isSurveyComplete.value = true
-      clearQuestion()
-    }
+    clearQuestion()
+    // if (surveyArray.value.length < numberOfQuestions.value) {
+    //   clearQuestion()
+    // }
+    // if (surveyArray.value.length === numberOfQuestions.value) {
+    //   isSurveyComplete.value = true
+    //   clearQuestion()
+    // }
   }
 
   // Editing

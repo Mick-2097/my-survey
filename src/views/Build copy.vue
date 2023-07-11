@@ -13,7 +13,11 @@ const store = dataStore()
         Survey title:
         <input type="text" v-model="store.surveyName" />
       </label>
-      <span v-if="!store.isSurveyValid && !store.surveyName">Please include Survey title</span>
+      <label title="Number of questions in your survey">
+        Survey length:
+        <input type="number" v-model="store.numberOfQuestions" />
+      </label>
+      <span v-if="!store.isSurveyValid">Please include Survey title</span>
       <div class="buttons">
         <Vbutton class="button-dark" @click="store.setSurvey" buttonText="Next" />
         <RouterLink to="my-surveys">
@@ -43,9 +47,6 @@ const store = dataStore()
           </option>
         </select>
       </label>
-      <RouterLink to="preview" v-if="store.surveyArray.length && !store.questionType">
-        <Vbutton class="button-dark preview-button" buttonText="Preview" />
-      </RouterLink>
       <Vquestionmulti v-if="store.questionType === 'Multiple choice'" />
       <Vquestionmulti v-if="store.questionType === 'Multiple answer'" />
       <div class="wrapper" v-if="store.questionType === 'Text response'">
@@ -55,18 +56,18 @@ const store = dataStore()
         </label>
         <span v-if="!store.isQuestionValid"> Please fill in Question content</span>
         <div class="buttons" v-if="!store.isQuestionSet">
-          <Vbutton class="button-dark" @click="store.setQuestion" buttonText="Add question" />
-          <!-- <RouterLink to="my-surveys">
-            <Vbutton class="button-light" buttonText="Cancel" />
-          </RouterLink> -->
+          <Vbutton class="button-dark" @click="store.setQuestion" buttonText="Next" />
+          <RouterLink to="my-surveys">
+            <Vbutton class="button-light" v-if="!store.isQuestionSet" buttonText="Cancel" />
+          </RouterLink>
         </div>
       </div>
     </section>
-    <!-- <div class="wrapper" v-if="store.isSurveyComplete">
+    <div class="wrapper" v-if="store.isSurveyComplete">
       <RouterLink to="preview">
         <Vbutton class="button-dark preview-button" buttonText="Preview" />
       </RouterLink>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -78,6 +79,6 @@ span {
   color: rgb(225, 28, 28);
 }
 .preview-button {
-  margin-top: 3rem;
+  margin-top: 6rem;
 }
 </style>

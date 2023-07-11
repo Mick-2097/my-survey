@@ -14,6 +14,7 @@ const auth = authData()
       Password:
       <input type="password" v-model="auth.password" placeholder="Password" />
     </label>
+    <span v-if="auth.isError">Please check your details and try again</span>
     <div class="wrapper">
       <Vbutton class="button-dark" buttonText="Sign in" @click="auth.login" />
     </div>
@@ -25,5 +26,8 @@ const auth = authData()
 p {
   text-align: center;
   margin-top: 2rem;
+}
+span {
+  text-align: center;
 }
 </style>

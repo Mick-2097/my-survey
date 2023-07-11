@@ -56,17 +56,9 @@ const store = dataStore()
         <span v-if="!store.isQuestionValid"> Please fill in Question content</span>
         <div class="buttons" v-if="!store.isQuestionSet">
           <Vbutton class="button-dark" @click="store.setQuestion" buttonText="Add question" />
-          <!-- <RouterLink to="my-surveys">
-            <Vbutton class="button-light" buttonText="Cancel" />
-          </RouterLink> -->
         </div>
       </div>
     </section>
-    <!-- <div class="wrapper" v-if="store.isSurveyComplete">
-      <RouterLink to="preview">
-        <Vbutton class="button-dark preview-button" buttonText="Preview" />
-      </RouterLink>
-    </div> -->
   </div>
 </template>
 

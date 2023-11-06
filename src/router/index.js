@@ -98,8 +98,8 @@ router.beforeEach(async (to, from, next) => {
 
   if (requiresAuth) {
     const user = await new Promise((resolve) => {
-      const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
-        unsubscribe()
+      const stopWatching = onAuthStateChanged(getAuth(), (user) => {
+        stopWatching()
         resolve(user)
       })
     })
@@ -107,8 +107,6 @@ router.beforeEach(async (to, from, next) => {
       document.title = `${to.meta.title}`
       authData().UID = user.uid
       authData().name = user.displayName
-      const token = await user.getIdToken()
-      localStorage.setItem('firebaseToken', token)
       next()
     } else {
       next('/login')

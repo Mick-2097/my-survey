@@ -41,22 +41,11 @@ export const dataStore = defineStore('data-store', () => {
     isSurveySet.value = false
     isSurveyComplete.value = false
   }
-  // const setQuestion = () => {
-  //   if (questionContent.value && numberOfAnswers.value) {
-  //     for (let i = 0; i < numberOfAnswers.value; i++) {
-  //       setAnswersArray.push(i)
-  //     }
-  //     isQuestionValid.value = true
-  //     isQuestionSet.value = true
-  //   } else {
-  //     isQuestionValid.value = false
-  //   }
-  //   if (questionType.value === 'Text response' && isQuestionSet.value) {
-  //     saveQuestion()
-  //   }
-  // }
   const setQuestion = () => {
-    if (questionContent.value) {
+    if (questionContent.value && numberOfAnswers.value) {
+      for (let i = 0; i < numberOfAnswers.value; i++) {
+        setAnswersArray.push(i)
+      }
       isQuestionValid.value = true
       isQuestionSet.value = true
     } else {
@@ -66,6 +55,17 @@ export const dataStore = defineStore('data-store', () => {
       saveQuestion()
     }
   }
+  // const setQuestion = () => {
+  //   if (questionContent.value) {
+  //     isQuestionValid.value = true
+  //     isQuestionSet.value = true
+  //   } else {
+  //     isQuestionValid.value = false
+  //   }
+  //   if (questionType.value === 'Text response' && isQuestionSet.value) {
+  //     saveQuestion()
+  //   }
+  // }
   const clearQuestion = () => {
     questionType.value = ''
     questionContent.value = ''

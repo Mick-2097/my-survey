@@ -13,7 +13,7 @@ export const authData = defineStore('auth-data', () => {
   const name = ref('')
   const email = ref('')
   const password = ref('')
-  const UID = ref({})
+  const UID = ref('')
   const isError = ref(false)
   const errorMessage = ref('')
 
@@ -44,11 +44,13 @@ export const authData = defineStore('auth-data', () => {
 
   const login = () => {
     signInWithEmailAndPassword(getAuth(), email.value, password.value)
-      .then((data) => {
+      .then(async (data) => {
         UID.value = data.user.uid
         name.value = data.user.displayName
         isError.value = false
         router.push('/home')
+        const token = await data.user.getIdToken()
+        localStorage.setItem('firebaseToken', token)
       })
       .catch((error) => {
         isError.value = true
@@ -61,7 +63,7 @@ export const authData = defineStore('auth-data', () => {
     signOut(getAuth()).then(() => {
       UID.value = ''
       name.value = ''
-      console.log('Signed out')
+      localStorage.removeItem('firebaseToken')
       router.push('/login')
     })
   }

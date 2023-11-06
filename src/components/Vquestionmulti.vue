@@ -1,6 +1,7 @@
 <script setup>
 import Vbutton from './Vbutton.vue'
 import { dataStore } from '../stores/data-store'
+
 const store = dataStore()
 </script>
 <template>
